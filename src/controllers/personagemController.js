@@ -46,27 +46,27 @@ export const criar = async (req, res) => {
 
 export const buscarTodos = async (req, res) => {
     try {
-        const registros = await PersonagemModel.buscarTodos(req.query);
+        const personagem = await PersonagemModel.buscarTodos(req.query);
         const { lang } = req.query;
 
-        if (!registros || registros.length === 0) {
+        if (!personagem || personagem.length === 0) {
             return res.status(400).json({ message: 'Nenhum registro de personagem encontrado.' });
         }
 
         if (lang === 'en') {
             return res.json({
-            caracteristicas: registros.caracteristicas_en,
-            representacao: registros.representacao_en,
+            caracteristicas: personagem.caracteristicas_en,
+            representacao: personagem.representacao_en,
             });
         }
 
         res.json({
-            nome: registros.nome,
-            caracteristicas: registros.caracteristicas,
-            representacao: registros.representacao,
+            nome: personagem.nome,
+            caracteristicas: personagem.caracteristicas,
+            representacao: personagem.representacao,
         });
 
-        return res.status(200).json(registros);
+        return res.status(200).json(personagem);
     } catch (error) {
         console.error('Erro ao buscar:', error);
         return res.status(500).json({ error: 'Erro ao buscar registro de personagem.' });
