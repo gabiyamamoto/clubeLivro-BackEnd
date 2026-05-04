@@ -23,8 +23,8 @@ async function main() {
 
     console.log('📦 Inserindo dados...');
 
-    // 📖 LIVRO PRINCIPAL
-    const livro = await prisma.livro.create({
+    // 📖 LIVRO (com nomes dos personagens como string)
+    await prisma.livro.create({
         data: {
             titulo: 'A Moreninha',
             capa: 'https://exemplo.com/capa.jpg',
@@ -34,7 +34,7 @@ async function main() {
             genero_en: 'Romanticism',
             resumo: 'História de amor entre Augusto e Carolina.',
             resumo_en: 'A love story between Augusto and Carolina.',
-            contexto: 'Contexto do Romantismo no Brasil.',
+            contexto: 'Contexto do romantismo no Brasil.',
             contexto_en: 'Romanticism context in Brazil.',
             enredo: 'Narrativa sobre promessa de amor.',
             enredo_en: 'Story about a love promise.',
@@ -44,6 +44,7 @@ async function main() {
             estiloEscrita_en: 'Simple and emotional language.',
             verossimilhanca: 'Situações realistas da sociedade.',
             verossimilhanca_en: 'Realistic social situations.',
+            personagens: 'Carolina, Augusto',
             caracteristicasLiterarias: 'Idealização do amor.',
             caracteristicasLiterarias_en: 'Idealization of love.',
             conclusao: 'Obra marcante do romantismo.',
@@ -51,7 +52,7 @@ async function main() {
         },
     });
 
-    // 👥 PERSONAGENS (RELACIONADOS)
+    // 👥 PERSONAGENS (independentes)
     await prisma.personagem.createMany({
         data: [
             {
@@ -60,7 +61,6 @@ async function main() {
                 caracteristicas_en: 'Romantic and mysterious young woman',
                 representacao: 'Ideal feminino do romantismo',
                 representacao_en: 'Romantic ideal woman',
-                livroId: livro.id,
             },
             {
                 nome: 'Augusto',
@@ -68,7 +68,6 @@ async function main() {
                 caracteristicas_en: 'Inconstant young man',
                 representacao: 'Juventude impulsiva',
                 representacao_en: 'Impulsive youth',
-                livroId: livro.id,
             },
         ],
     });
@@ -106,20 +105,21 @@ async function main() {
                 tema_en: 'Idealized love',
             },
             {
-                tema: 'Influência do passado',
-                tema_en: 'Influence of the past',
+                tema: 'Memória e promessa',
+                tema_en: 'Memory and promise',
             },
         ],
     });
 
-    // ❓ QUESTÕES + ALTERNATIVAS
+    // ❓ QUESTÃO
     const questao = await prisma.questao.create({
         data: {
-            enunciado: 'Qual é a principal característica do romantismo?',
-            enunciado_en: 'What is the main characteristic of romanticism?',
+            enunciado: 'Qual é uma característica do romantismo?',
+            enunciado_en: 'What is a characteristic of romanticism?',
         },
     });
 
+    // 🔘 ALTERNATIVAS
     await prisma.alternativa.createMany({
         data: [
             {
@@ -129,8 +129,8 @@ async function main() {
                 questaoId: questao.id,
             },
             {
-                alternativa: 'Realismo extremo',
-                alternativa_en: 'Extreme realism',
+                alternativa: 'Objetividade extrema',
+                alternativa_en: 'Extreme objectivity',
                 ehCorreta: false,
                 questaoId: questao.id,
             },

@@ -35,12 +35,11 @@ model Livro {
     estiloEscrita_en             String
     verossimilhanca              String
     verossimilhanca_en           String
+    personagens                  String
     caracteristicasLiterarias    String
     caracteristicasLiterarias_en String
     conclusao                    String
     conclusao_en                 String
-
-    personagens Personagem[]
 
     @@map("livro")
 }
@@ -52,8 +51,6 @@ model Personagem {
     caracteristicas_en String
     representacao      String
     representacao_en   String
-    livroId            Int
-    livro              Livro  @relation(fields: [livroId], references: [id])
 
     @@map("personagem")
 }
