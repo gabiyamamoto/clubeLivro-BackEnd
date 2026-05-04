@@ -1,0 +1,123 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+model Participante {
+    id      Int    @id @default(autoincrement())
+    nome    String
+    curso   String
+    fotoUrl String
+
+    @@map("participante")
+}
+
+model Livro {
+    id                           Int    @id @default(autoincrement())
+    titulo                       String
+    capa                         String
+    autor                        String
+    anoPublicacao                Int
+    genero                       String
+    genero_en                    String
+    resumo                       String
+    resumo_en                    String
+    contexto                     String
+    contexto_en                  String
+    enredo                       String
+    enredo_en                    String
+    detalhesAutor                String
+    detalhesAutor_en             String
+    estiloEscrita                String
+    estiloEscrita_en             String
+    verossimilhanca              String
+    verossimilhanca_en           String
+    caracteristicasLiterarias    String
+    caracteristicasLiterarias_en String
+    conclusao                    String
+    conclusao_en                 String
+
+    personagens Personagem[]
+
+    @@map("livro")
+}
+
+model Personagem {
+    id                 Int    @id @default(autoincrement())
+    nome               String
+    caracteristicas    String
+    caracteristicas_en String
+    representacao      String
+    representacao_en   String
+    livroId            Int
+    livro              Livro  @relation(fields: [livroId], references: [id])
+
+    @@map("personagem")
+}
+
+model Videoaula {
+    id           Int    @id @default(autoincrement())
+    videoUrl     String
+    titulo       String
+    titulo_en    String
+    descricao    String
+    descricao_en String
+
+    @@map("videoaula")
+}
+
+model Dica {
+    id      Int    @id @default(autoincrement())
+    dica    String
+    dica_en String
+
+    @@map("dica")
+}
+
+model Tema {
+    id      Int    @id @default(autoincrement())
+    tema    String
+    tema_en String
+
+    @@map("tema")
+}
+
+model Questao {
+    id           Int    @id @default(autoincrement())
+    enunciado    String
+    enunciado_en String
+
+    alternativas Alternativa[]
+    respostas    Resposta[]
+
+    @@map("questao")
+}
+
+model Alternativa {
+    id             Int     @id @default(autoincrement())
+    alternativa    String
+    alternativa_en String
+    ehCorreta      Boolean
+
+    questaoId Int
+    questao   Questao @relation(fields: [questaoId], references: [id])
+
+    respostas Resposta[]
+
+    @@map("alternativa")
+}
+
+model Resposta {
+    id Int @id @default(autoincrement())
+
+    questaoId     Int
+    alternativaId Int
+
+    questao     Questao     @relation(fields: [questaoId], references: [id])
+    alternativa Alternativa @relation(fields: [alternativaId], references: [id])
+
+    @@map("resposta")
+}
