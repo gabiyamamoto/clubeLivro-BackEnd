@@ -47,7 +47,7 @@ export const buscarTodos = async (req, res) => {
     }
 };
 
-// Buscar por ID
+
 export const buscarPorId = async (req, res) => {
     try {
         const { id } = req.params;
