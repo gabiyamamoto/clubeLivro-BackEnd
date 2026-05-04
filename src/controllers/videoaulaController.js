@@ -8,13 +8,13 @@ export const criar = async (req, res) => {
 
         const { videoUrl, titulo, titulo_en, descricao, descricao_en } = req.body;
 
-        if (!nome){
+        if (!videoUrl){
             return res.status(400).json({ error: 'O campo "videoUrl" é obrigatório!' });
         }
-        if (preco === undefined || preco === null) {
+        if (titulo === undefined || preco === null) {
             return res.status(400).json({ error: 'O campo "titulo" é obrigatório!' });
         }
-        if (preco === undefined || preco === null) {
+        if (titulo_en === undefined || preco === null) {
             return res.status(400).json({ error: 'O campo "titulo_en" é obrigatório!' });
         }
 
