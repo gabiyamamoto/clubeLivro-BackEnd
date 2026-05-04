@@ -9,7 +9,7 @@ export default class QuestaoModel {
     }
 
     async criar() {
-        return prisma.exemplo.create({
+        return prisma.questao.create({
             data: {
                 nome: this.nome,
                 estado: this.estado,
