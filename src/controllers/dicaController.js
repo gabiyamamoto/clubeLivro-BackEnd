@@ -1,4 +1,4 @@
-import ExemploModel from '../models/ExemploModel.js';
+import DicaModel from '../models/DicaModel.js';
 
 export const criar = async (req, res) => {
     try {
@@ -8,36 +8,35 @@ export const criar = async (req, res) => {
 
         const { dica, dica_en } = req.body;
 
-
-        if (dica === undefined || preco === null) {
+        if (!dica) {
             return res.status(400).json({ error: 'O campo "dica" é obrigatório!' });
         }
-        if (dica_en === undefined || preco === null) {
+        if (!dica_en) {
             return res.status(400).json({ error: 'O campo "dica_en" é obrigatório!' });
         }
 
-        const exemplo = new ExemploModel({ dica, dica_en});
-        const data = await exemplo.criar();
+        const dicaObj = new DicaModel({ dica, dica_en });
+        const data = await dicaObj.criar();
 
-        return res.status(201).json({ message: 'Registro criado com sucesso!', data });
+        return res.status(201).json({ message: 'Dica criada com sucesso!', data });
     } catch (error) {
         console.error('Erro ao criar:', error);
-        return res.status(500).json({ error: 'Erro interno ao salvar o registro.' });
+        return res.status(500).json({ error: 'Erro interno ao salvar a dica.' });
     }
 };
 
 export const buscarTodos = async (req, res) => {
     try {
-        const registros = await ExemploModel.buscarTodos(req.query);
+        const dicas = await DicaModel.buscarTodos(req.query);
 
-        if (!registros || registros.length === 0) {
-            return res.status(400).json({ message: 'Nenhum registro encontrado.' });
+        if (!dicas || dicas.length === 0) {
+            return res.status(400).json({ message: 'Nenhuma dica encontrada.' });
         }
 
-        return res.status(200).json(registros);
+        return res.status(200).json(dicas);
     } catch (error) {
         console.error('Erro ao buscar:', error);
-        return res.status(500).json({ error: 'Erro ao buscar registros.' });
+        return res.status(500).json({ error: 'Erro ao buscar dicas.' });
     }
 };
 
@@ -49,16 +48,16 @@ export const buscarPorId = async (req, res) => {
             return res.status(400).json({ error: 'O ID enviado não é um número válido.' });
         }
 
-        const exemplo = await ExemploModel.buscarPorId(parseInt(id));
+        const dica = await DicaModel.buscarPorId(parseInt(id));
 
-        if (!exemplo) {
-            return res.status(404).json({ error: 'Registro não encontrado.' });
+        if (!dica) {
+            return res.status(404).json({ error: 'Dica não encontrada.' });
         }
 
-        return res.status(200).json({ data: exemplo });
+        return res.status(200).json({ data: dica });
     } catch (error) {
         console.error('Erro ao buscar:', error);
-        return res.status(500).json({ error: 'Erro ao buscar registro.' });
+        return res.status(500).json({ error: 'Erro ao buscar dica.' });
     }
 };
 
@@ -74,28 +73,25 @@ export const atualizar = async (req, res) => {
             return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
         }
 
-        const exemplo = await ExemploModel.buscarPorId(parseInt(id));
+        const dica = await DicaModel.buscarPorId(parseInt(id));
 
-        if (!exemplo) {
-            return res.status(404).json({ error: 'Registro não encontrado para atualizar.' });
+        if (!dica) {
+            return res.status(404).json({ error: 'Dica não encontrada para atualizar.' });
         }
-
 
         if (req.body.dica !== undefined) {
-            exemplo.dica = req.body.dica;
+            dica.dica = req.body.dica;
         }
         if (req.body.dica_en !== undefined) {
-            exemplo.dica_en = req.body.dica_en;
+            dica.dica_en = req.body.dica_en;
         }
 
-        const data = await exemplo.atualizar();
+        const data = await dica.atualizar();
 
-        return res
-            .status(200)
-            .json({ message: `O registro "${data.videoUrl}" foi atualizado com sucesso!`, data });
+        return res.status(200).json({ message: `A dica foi atualizada com sucesso!`, data });
     } catch (error) {
         console.error('Erro ao atualizar:', error);
-        return res.status(500).json({ error: 'Erro ao atualizar registro.' });
+        return res.status(500).json({ error: 'Erro ao atualizar dica.' });
     }
 };
 
@@ -107,22 +103,17 @@ export const deletar = async (req, res) => {
             return res.status(400).json({ error: 'ID inválido.' });
         }
 
-        const exemplo = await ExemploModel.buscarPorId(parseInt(id));
+        const dica = await DicaModel.buscarPorId(parseInt(id));
 
-        if (!exemplo) {
-            return res.status(404).json({ error: 'Registro não encontrado para deletar.' });
+        if (!dica) {
+            return res.status(404).json({ error: 'Dica não encontrada para deletar.' });
         }
 
-        await exemplo.deletar();
+        await dica.deletar();
 
-        return res
-            .status(200)
-            .json({
-                message: `O registro "${exemplo.nome}" foi deletado com sucesso!`,
-                deletado: exemplo,
-            });
+        return res.status(200).json({ message: `A dica foi deletada com sucesso!`, deletado: dica });
     } catch (error) {
         console.error('Erro ao deletar:', error);
-        return res.status(500).json({ error: 'Erro ao deletar registro.' });
+        return res.status(500).json({ error: 'Erro ao deletar dica.' });
     }
 };
