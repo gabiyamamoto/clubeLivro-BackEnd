@@ -1,4 +1,4 @@
-import participantesModel from '../models/participantesModel.js';
+import participantesModel from '../models/ParticipantesModel.js';
 
 export const buscarTodos = async (req, res) => {
     try {
