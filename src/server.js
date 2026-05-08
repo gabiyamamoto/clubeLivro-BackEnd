@@ -1,6 +1,7 @@
 import express from 'express';
 import 'dotenv/config';
 import exemplosRoutes from './routes/exemploRoute.js';
+import fotoRoute from './routes/fotoRoute.js'
 
 const app = express();
 const PORT = process.env.PORT || 3001;
