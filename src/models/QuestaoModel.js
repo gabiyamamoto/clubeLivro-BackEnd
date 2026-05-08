@@ -1,55 +1,70 @@
 import prisma from '../lib/services/prismaClient.js';
 
 export default class QuestaoModel {
-    constructor({ id = null, nome, estado = true, preco = null } = {}) {
+    constructor({ id = null, enunciado, enunciado_en } = {}) {
         this.id = id;
-        this.nome = nome;
-        this.estado = estado;
-        this.preco = preco;
+        this.enunciado = enunciado;
+        this.enunciado_en = enunciado_en;
     }
 
     async criar() {
         return prisma.questao.create({
             data: {
-                nome: this.nome,
-                estado: this.estado,
-                preco: this.preco,
+                enunciado: this.enunciado,
+                enunciado_en: this.enunciado_en,
+            },
+            include: {
+                alternativas: true,
+                respostas: true,
             },
         });
     }
 
     async atualizar() {
-        return prisma.exemplo.update({
+        return prisma.questao.update({
             where: { id: this.id },
-            data: { nome: this.nome, estado: this.estado, preco: this.preco },
+            data: {
+                enunciado: this.enunciado,
+                enunciado_en: this.enunciado_en,
+            },
+            include: {
+                alternativas: true,
+                respostas: true,
+            },
         });
     }
 
     async deletar() {
-        return prisma.exemplo.delete({ where: { id: this.id } });
+        return prisma.questao.delete({ where: { id: this.id } });
     }
 
     static async buscarTodos(filtros = {}) {
         const where = {};
 
-        if (filtros.nome) {
-            where.nome = { contains: filtros.nome, mode: 'insensitive' };
-        }
-        if (filtros.estado !== undefined) {
-            where.estado = filtros.estado === 'true';
-        }
-        if (filtros.preco !== undefined) {
-            where.preco = parseFloat(filtros.preco);
+        if (filtros.enunciado) {
+            where.enunciado = { contains: filtros.enunciado, mode: 'insensitive' };
         }
 
-        return prisma.exemplo.findMany({ where });
+        return prisma.questao.findMany({
+            where,
+            include: {
+                alternativas: true,
+                respostas: true,
+            },
+        });
     }
 
     static async buscarPorId(id) {
-        const data = await prisma.exemplo.findUnique({ where: { id } });
+        const data = await prisma.questao.findUnique({
+            where: { id },
+            include: {
+                alternativas: true,
+                respostas: true,
+            },
+        });
         if (!data) {
             return null;
         }
-        return new ExemploModel(data);
+        return new QuestaoModel(data);
     }
 }
