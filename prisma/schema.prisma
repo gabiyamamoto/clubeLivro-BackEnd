@@ -86,38 +86,22 @@ model Tema {
 }
 
 model Questao {
-    id           Int    @id @default(autoincrement())
-    enunciado    String
-    enunciado_en String
-
-    alternativas Alternativa[]
-    respostas    Resposta[]
+    id                 Int    @id @default(autoincrement())
+    pergunta           String
+    pergunta_en        String
+    opcaoA             String
+    opcaoA_en          String
+    opcaoB             String
+    opcaoB_en          String
+    opcaoC             String
+    opcaoC_en          String
+    opcaoD             String
+    opcaoD_en          String
+    opcaoE             String
+    opcaoE_en          String
+    respostaCorreta    String
+    explicacao         String
+    explicacao_en      String
 
     @@map("questao")
-}
-
-model Alternativa {
-    id             Int     @id @default(autoincrement())
-    alternativa    String
-    alternativa_en String
-    ehCorreta      Boolean
-
-    questaoId Int
-    questao   Questao @relation(fields: [questaoId], references: [id])
-
-    respostas Resposta[]
-
-    @@map("alternativa")
-}
-
-model Resposta {
-    id Int @id @default(autoincrement())
-
-    questaoId     Int
-    alternativaId Int
-
-    questao     Questao     @relation(fields: [questaoId], references: [id])
-    alternativa Alternativa @relation(fields: [alternativaId], references: [id])
-
-    @@map("resposta")
 }
