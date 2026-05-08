@@ -47,17 +47,9 @@ export const criar = async (req, res) => {
 export const buscarTodos = async (req, res) => {
     try {
         const personagem = await PersonagemModel.buscarTodos(req.query);
-        const { lang } = req.query;
 
         if (!personagem || personagem.length === 0) {
             return res.status(400).json({ message: 'Nenhum registro de personagem encontrado.' });
-        }
-
-        if (lang === 'en') {
-            return res.json({
-            caracteristicas: personagem.caracteristicas_en,
-            representacao: personagem.representacao_en,
-            });
         }
 
         res.json({
