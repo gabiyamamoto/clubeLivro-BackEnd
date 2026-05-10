@@ -1,8 +1,8 @@
-import participantesModel from '../models/ParticipantesModel.js';
+import ParticipanteModel from '../models/ParticipanteModel.js';
 
 export const buscarTodos = async (req, res) => {
     try {
-        const registros = await participantesModel.buscarTodos(req.query);
+        const registros = await ParticipanteModel.buscarTodos(req.query);
 
         if (!registros || registros.length === 0) {
             return res.status(200).json({ message: 'Nenhum registro encontrado.' });
@@ -23,7 +23,7 @@ export const buscarPorId = async (req, res) => {
             return res.status(400).json({ error: 'O ID enviado não é um número válido.' });
         }
 
-        const participante = await participantesModel.buscarPorId(parseInt(id));
+        const participante = await ParticipanteModel.buscarPorId(parseInt(id));
 
         if (!participante) {
             return res.status(404).json({ error: 'Registro do participante não encontrado.' });
@@ -48,7 +48,7 @@ export const atualizar = async (req, res) => {
             return res.status(400).json({ error: 'Corpo da requisição vazio.' });
         }
 
-        const participante = await participantesModel.buscarPorId(idNum);
+        const participante = await ParticipanteModel.buscarPorId(idNum);
 
         if (!participante) {
             return res.status(404).json({ error: 'Participante não encontrado.' });
@@ -59,7 +59,7 @@ export const atualizar = async (req, res) => {
         if (req.body.curso !== undefined) dadosParaAtualizar.curso = req.body.curso;
         if (req.body.fotoUrl !== undefined) dadosParaAtualizar.fotoUrl = req.body.fotoUrl;
 
-        const data = await participantesModel.atualizar(idNum, dadosParaAtualizar);
+        const data = await ParticipanteModel.atualizar(idNum, dadosParaAtualizar);
 
         res.json({ message: `Participante "${data.nome}" atualizado com sucesso!`, data });
     } catch (error) {
