@@ -37,6 +37,7 @@ model Livro {
     verossimilhanca_en           String
     caracteristicasLiterarias    String
     caracteristicasLiterarias_en String
+    personagens                  String
     conclusao                    String
     conclusao_en                 String
 
@@ -82,22 +83,22 @@ model Tema {
 }
 
 model Questao {
-    id                 Int    @id @default(autoincrement())
-    pergunta           String
-    pergunta_en        String
-    opcaoA             String
-    opcaoA_en          String
-    opcaoB             String
-    opcaoB_en          String
-    opcaoC             String
-    opcaoC_en          String
-    opcaoD             String
-    opcaoD_en          String
-    opcaoE             String
-    opcaoE_en          String
-    respostaCorreta    String
-    explicacao         String
-    explicacao_en      String
+    id              Int    @id @default(autoincrement())
+    pergunta        String
+    pergunta_en     String
+    opcaoA          String
+    opcaoA_en       String
+    opcaoB          String
+    opcaoB_en       String
+    opcaoC          String
+    opcaoC_en       String
+    opcaoD          String
+    opcaoD_en       String
+    opcaoE          String
+    opcaoE_en       String
+    respostaCorreta String
+    explicacao      String
+    explicacao_en   String
 
     @@map("questao")
 }
