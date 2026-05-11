@@ -5,7 +5,7 @@ import livroRoute from './routes/livroRoute.js';
 import participanteRoute from './routes/participanteRoute.js';
 import personagemRoute from './routes/personagemRoute.js';
 import questaoRoute from './routes/questaoRoute.js';
-import videoAulaRoute from './routes/videoAulaRoute.js';
+import videoAulaRoute from './routes/videoaulaRoute.js';
 import autenticar from './utils/apiKey.js';
 
 const app = express();
