@@ -26,65 +26,84 @@ async function main() {
 
     console.log('📦 Inserindo dados...');
 
+    // 👥 PARTICIPANTES
+    await prisma.participante.createMany({
+        data: [
+            {
+                nome: 'Gabriela Yamamoto',
+                curso: 'Desenvolvimento de Sistemas',
+                fotoUrl: 'https://exemplo.com/gabi.jpg',
+            },
+            {
+                nome: 'Ana Clara',
+                curso: 'Desenvolvimento de Sistemas',
+                fotoUrl: 'https://exemplo.com/ana.jpg',
+            },
+        ],
+    });
+
     // 📖 LIVRO
-    const livro = await prisma.livro.create({
+    await prisma.livro.create({
         data: {
             titulo: 'A Moreninha',
+
             capa: 'https://exemplo.com/capa.jpg',
+
             autor: 'Joaquim Manuel de Macedo',
+
             anoPublicacao: 1844,
 
             genero: 'Romantismo',
             genero_en: 'Romanticism',
 
             resumo: 'História de amor entre Augusto e Carolina.',
-            resumo_en: 'A love story between Augusto and Carolina.',
+            resumo_en: 'Love story between Augusto and Carolina.',
 
-            contexto: 'Contexto do romantismo no Brasil.',
-            contexto_en: 'Romanticism context in Brazil.',
+            contexto: 'Obra produzida durante o romantismo brasileiro.',
+            contexto_en: 'Book produced during Brazilian romanticism.',
 
-            enredo: 'Narrativa sobre promessa de amor.',
-            enredo_en: 'Story about a love promise.',
+            enredo: 'Augusto aposta que não conseguirá amar ninguém por muito tempo.',
+            enredo_en: 'Augusto bets he cannot love anyone for too long.',
 
-            detalhesAutor: 'Autor importante do romantismo.',
-            detalhesAutor_en: 'Important romanticism author.',
+            detalhesAutor: 'Joaquim Manuel de Macedo foi um importante autor romântico.',
+            detalhesAutor_en: 'Joaquim Manuel de Macedo was an important romantic author.',
 
-            estiloEscrita: 'Linguagem simples e emocional.',
-            estiloEscrita_en: 'Simple and emotional language.',
+            estiloEscrita: 'Linguagem simples, sentimental e romântica.',
+            estiloEscrita_en: 'Simple, sentimental and romantic language.',
 
-            verossimilhanca: 'Situações realistas da sociedade.',
-            verossimilhanca_en: 'Realistic social situations.',
+            verossimilhanca: 'A obra apresenta costumes reais da sociedade da época.',
+            verossimilhanca_en: 'The book shows real customs of society at that time.',
 
-            caracteristicasLiterarias: 'Idealização do amor.',
-            caracteristicasLiterarias_en: 'Idealization of love.',
+            personagens: 'Carolina, Augusto',
 
-            conclusao: 'Obra marcante do romantismo.',
-            conclusao_en: 'Important romanticism work.',
+            caracteristicasLiterarias: 'Idealização amorosa e sentimentalismo.',
+            caracteristicasLiterarias_en: 'Love idealization and sentimentalism.',
+
+            conclusao: 'A obra é considerada um marco do romantismo brasileiro.',
+            conclusao_en: 'The book is considered a landmark of Brazilian romanticism.',
         },
     });
 
-    // 👥 PERSONAGENS
+    // 👤 PERSONAGENS
     await prisma.personagem.createMany({
         data: [
             {
                 nome: 'Carolina',
-                caracteristicas: 'Jovem romântica e misteriosa',
-                caracteristicas_en: 'Romantic and mysterious young woman',
 
-                representacao: 'Ideal feminino do romantismo',
-                representacao_en: 'Romantic ideal woman',
+                caracteristicas: 'Jovem inteligente, misteriosa e romântica.',
+                caracteristicas_en: 'Intelligent, mysterious and romantic young woman.',
 
-                livroId: livro.id,
+                representacao: 'Representa o ideal feminino romântico.',
+                representacao_en: 'Represents the romantic female ideal.',
             },
             {
                 nome: 'Augusto',
-                caracteristicas: 'Jovem inconstante',
-                caracteristicas_en: 'Inconstant young man',
 
-                representacao: 'Juventude impulsiva',
-                representacao_en: 'Impulsive youth',
+                caracteristicas: 'Jovem impulsivo e inconstante.',
+                caracteristicas_en: 'Impulsive and inconsistent young man.',
 
-                livroId: livro.id,
+                representacao: 'Representa a juventude da elite da época.',
+                representacao_en: 'Represents the youth of the elite at that time.',
             },
         ],
     });
@@ -94,11 +113,11 @@ async function main() {
         data: {
             videoUrl: 'https://youtube.com/video',
 
-            titulo: 'Explicação da obra',
-            titulo_en: 'Book explanation',
+            titulo: 'Análise da obra A Moreninha',
+            titulo_en: 'Analysis of the book A Moreninha',
 
-            descricao: 'Resumo e análise da obra',
-            descricao_en: 'Summary and analysis of the book',
+            descricao: 'Explicação sobre enredo, personagens e contexto.',
+            descricao_en: 'Explanation about plot, characters and context.',
         },
     });
 
@@ -106,12 +125,12 @@ async function main() {
     await prisma.dica.createMany({
         data: [
             {
-                dica: 'Entenda o romantismo.',
-                dica_en: 'Understand romanticism.',
+                dica: 'Estude as características do romantismo.',
+                dica_en: 'Study the characteristics of romanticism.',
             },
             {
-                dica: 'Analise os personagens.',
-                dica_en: 'Analyze the characters.',
+                dica: 'Analise a construção dos personagens.',
+                dica_en: 'Analyze the character construction.',
             },
         ],
     });
@@ -120,12 +139,12 @@ async function main() {
     await prisma.tema.createMany({
         data: [
             {
-                tema: 'Amor idealizado',
-                tema_en: 'Idealized love',
+                tema: 'Idealização amorosa',
+                tema_en: 'Love idealization',
             },
             {
-                tema: 'Memória e promessa',
-                tema_en: 'Memory and promise',
+                tema: 'Juventude e sociedade',
+                tema_en: 'Youth and society',
             },
         ],
     });
@@ -134,52 +153,52 @@ async function main() {
     await prisma.questao.createMany({
         data: [
             {
-                pergunta: 'Qual é uma característica do romantismo?',
-                pergunta_en: 'What is a characteristic of romanticism?',
+                pergunta: 'Qual característica está presente no romantismo?',
+                pergunta_en: 'Which characteristic is present in romanticism?',
 
-                opcaoA: 'Idealização do amor',
-                opcaoA_en: 'Idealization of love',
+                opcaoA: 'Objetividade',
+                opcaoA_en: 'Objectivity',
 
-                opcaoB: 'Objetividade extrema',
-                opcaoB_en: 'Extreme objectivity',
+                opcaoB: 'Sentimentalismo',
+                opcaoB_en: 'Sentimentalism',
 
-                opcaoC: 'Linguagem científica',
-                opcaoC_en: 'Scientific language',
+                opcaoC: 'Linguagem técnica',
+                opcaoC_en: 'Technical language',
 
-                opcaoD: 'Foco em tecnologia',
-                opcaoD_en: 'Focus on technology',
+                opcaoD: 'Foco científico',
+                opcaoD_en: 'Scientific focus',
 
-                opcaoE: 'Neutralidade emocional',
-                opcaoE_en: 'Emotional neutrality',
-
-                respostaCorreta: 'A',
-
-                explicacao: 'O romantismo valoriza a idealização do amor.',
-                explicacao_en: 'Romanticism values the idealization of love.',
-            },
-            {
-                pergunta: 'Quem é a protagonista da obra?',
-                pergunta_en: 'Who is the protagonist of the book?',
-
-                opcaoA: 'Aurora',
-                opcaoA_en: 'Aurora',
-
-                opcaoB: 'Carolina',
-                opcaoB_en: 'Carolina',
-
-                opcaoC: 'Helena',
-                opcaoC_en: 'Helena',
-
-                opcaoD: 'Capitu',
-                opcaoD_en: 'Capitu',
-
-                opcaoE: 'Lucíola',
-                opcaoE_en: 'Luciola',
+                opcaoE: 'Neutralidade',
+                opcaoE_en: 'Neutrality',
 
                 respostaCorreta: 'B',
 
-                explicacao: 'Carolina é a protagonista feminina da obra.',
-                explicacao_en: 'Carolina is the female protagonist of the book.',
+                explicacao: 'O romantismo valoriza emoções e sentimentalismo.',
+                explicacao_en: 'Romanticism values emotions and sentimentalism.',
+            },
+            {
+                pergunta: 'Quem é a protagonista feminina da obra?',
+                pergunta_en: 'Who is the female protagonist of the book?',
+
+                opcaoA: 'Capitu',
+                opcaoA_en: 'Capitu',
+
+                opcaoB: 'Lucíola',
+                opcaoB_en: 'Luciola',
+
+                opcaoC: 'Carolina',
+                opcaoC_en: 'Carolina',
+
+                opcaoD: 'Aurora',
+                opcaoD_en: 'Aurora',
+
+                opcaoE: 'Helena',
+                opcaoE_en: 'Helena',
+
+                respostaCorreta: 'C',
+
+                explicacao: 'Carolina é a protagonista da obra A Moreninha.',
+                explicacao_en: 'Carolina is the protagonist of A Moreninha.',
             },
         ],
     });

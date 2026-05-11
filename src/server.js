@@ -1,7 +1,12 @@
 import express from 'express';
 import 'dotenv/config';
-import exemplosRoutes from './routes/exemploRoute.js';
-import videoaulaRoutes from './routes/videoaulaRoute.js';
+import dicaRoute from './routes/dicaRoute.js';
+import livroRoute from './routes/livroRoute.js';
+import participanteRoute from './routes/participanteRoute.js';
+import personagemRoute from './routes/personagemRoute.js';
+import questaoRoute from './routes/questaoRoute.js';
+import videoAulaRoute from './routes/videoaulaRoute.js';
+import autenticar from './utils/apiKey.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -13,13 +18,17 @@ app.get('/', (req, res) => {
 });
 
 // Rotas
-app.use('/api/exemplos', exemplosRoutes);
-app.use('/api/videoaulas', videoaulaRoutes);
+app.use('/api/videoAulas', autenticar, videoAulaRoute);
+app.use('/api/questoes', autenticar, questaoRoute);
+app.use('/api/persnagens', autenticar, personagemRoute);
+app.use('/api/participantes', autenticar, participanteRoute);
+app.use('/api/livros', autenticar, livroRoute);
+app.use('/api/dicas', autenticar, dicaRoute);
 
 app.use((req, res) => {
     res.status(404).json({ error: 'Rota não encontrada' });
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+    console.log(`🚀 Servidor rodando em http://localhost:${PORT}`)
 });
