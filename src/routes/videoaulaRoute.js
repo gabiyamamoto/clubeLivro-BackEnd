@@ -1,5 +1,5 @@
 import express from 'express';
-import * as controller from '../controllers/videoaulaController.js';
+import * as controller from '../controllers/videoAulaController.js';
 
 const router = express.Router();
 

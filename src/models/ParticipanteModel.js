@@ -1,6 +1,6 @@
 import prisma from '../lib/services/prismaClient.js';
 
-export default class participantesModel {
+export default class ParticipanteModel {
     constructor({ id = null, nome, curso, fotoUrl } = {}) {
         this.id = id;
         this.nome = nome;

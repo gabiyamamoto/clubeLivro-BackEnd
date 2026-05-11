@@ -1,6 +1,11 @@
 import express from 'express';
 import 'dotenv/config';
-import exemplosRoutes from './routes/exemploRoute.js';
+import dicaRoute from './routes/dicaRoute.js';
+import livroRoute from './routes/livroRoute.js';
+import participanteRoute from './routes/participanteRoute.js';
+import personagemRoute from './routes/personagemRoute.js';
+import questaoRoute from './routes/questaoRoute.js';
+import videoAulaRoute from './routes/videoAulaRoute.js';
 
 
 const app = express();
@@ -13,8 +18,7 @@ app.get('/', (req, res) => {
 });
 
 // Rotas
-app.use('/api/exemplos', exemplosRoutes);
-app.use('/api/videoaulas', videoaulaRoutes);
+app.use('/api/videoAulas', videoAulaRoute);
 
 app.use((req, res) => {
     res.status(404).json({ error: 'Rota não encontrada' });

@@ -1,6 +1,7 @@
-import ParticipantesModel from '../models/ParticipantesModel.js';
+import ParticipanteModel from '../models/ParticipanteModel.js';
 import fs from 'fs/promises';
 import { processarFoto, removerFoto } from '../utils/fotoHelper.js';
+import ParticipanteModel from '../models/ParticipanteModel.js';
 
 export const uploadFoto = async (req, res) => {
     try {
@@ -20,7 +21,7 @@ export const uploadFoto = async (req, res) => {
             });
         }
 
-        const participante = await ParticipantesModel.buscarPorId(parseInt(id));
+        const participante = await ParticipanteModel.buscarPorId(parseInt(id));
 
         if (!participante) {
             removerFoto(req.file.path);
@@ -65,7 +66,7 @@ export const verFoto = async (req, res) => {
             });
         }
 
-        const participante = await ParticipantesModel.buscarPorId(parseInt(id));
+        const participante = await ParticipanteModel.buscarPorId(parseInt(id));
 
         if (!participante) {
             return res.status(404).json({
