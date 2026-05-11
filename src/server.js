@@ -21,11 +21,11 @@ app.get('/', (req, res) => {
 // Rotas
 app.use('/api/videoAulas', autenticar, videoAulaRoute);
 app.use('/api/questoes', autenticar, questaoRoute);
-app.use('/api/persnagens', autenticar, personagemRoute);
+app.use('/api/personagens', autenticar, personagemRoute);
 app.use('/api/participantes', autenticar, participanteRoute);
 app.use('/api/livros', autenticar, livroRoute);
 app.use('/api/dicas', autenticar, dicaRoute);
-app.use('/api/tema', autenticar, temaRoute);
+app.use('/api/temas', autenticar, temaRoute);
 
 app.use((req, res) => {
     res.status(404).json({ error: 'Rota não encontrada' });
