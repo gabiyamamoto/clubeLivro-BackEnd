@@ -1,5 +1,4 @@
 import LivroModel from '../models/LivroModel.js';
-import Livro from '../models/LivroModel.js';
 
 export const criar = async (req, res) => {
     try {
@@ -182,7 +181,7 @@ export const atualizar = async (req, res) => {
 
         return res
             .status(200)
-            .json({ message: `O livro "${data.nome}" foi atualizado com sucesso!`, data });
+            .json({ message: `O livro "${data.titulo}" foi atualizado com sucesso!`, data });
     } catch (error) {
         console.error('Erro ao atualizar:', error);
         return res.status(500).json({ error: 'Erro ao atualizar livro.' });
@@ -206,7 +205,7 @@ export const deletar = async (req, res) => {
         await livro.deletar();
 
         return res.status(200).json({
-            message: `O livro "${livro.nome}" foi deletado com sucesso!`,
+            message: `O livro "${livro.titulo}" foi deletado com sucesso!`,
             deletado: livro,
         });
     } catch (error) {
