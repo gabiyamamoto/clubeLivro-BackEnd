@@ -13,3 +13,4 @@ export default defineConfig({
         url: process.env['DIRECT_URL'],
     },
 });
+
