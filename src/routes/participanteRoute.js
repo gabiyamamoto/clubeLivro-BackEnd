@@ -1,5 +1,5 @@
 import express from 'express';
-import * as controller from '../controllers/personagemController.js';
+import * as controller from '../controllers/participantesController.js';
 const router = express.Router();
 
 router.get('/', controller.buscarTodos);

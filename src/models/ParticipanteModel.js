@@ -11,7 +11,18 @@ export default class ParticipanteModel {
     async atualizar() {
         return prisma.participante.update({
             where: { id: this.id },
-            data: { nome: this.nome, curso: this.curso, fotoUrl: this.fotoUrl },
+            data: {
+                nome: this.nome,
+                curso: this.curso,
+                fotoUrl: this.fotoUrl,
+            },
+        });
+    }
+
+    static async atualizar(id, dados) {
+        return prisma.participante.update({
+            where: { id },
+            data: dados,
         });
     }
 
@@ -21,11 +32,16 @@ export default class ParticipanteModel {
         if (filtros.nome) where.nome = { contains: filtros.nome, mode: 'insensitive' };
         if (filtros.curso) where.curso = { contains: filtros.curso, mode: 'insensitive' };
 
-        return prisma.participante.findMany({ where, orderBy: { id: 'asc' } });
+        return prisma.participante.findMany({
+            where,
+            orderBy: { id: 'asc' },
+        });
     }
 
     static async buscarPorId(id) {
-        const data = await prisma.participante.findUnique({ where: { id } });
+        const data = await prisma.participante.findUnique({
+            where: { id },
+        });
 
         if (!data) return null;
 
