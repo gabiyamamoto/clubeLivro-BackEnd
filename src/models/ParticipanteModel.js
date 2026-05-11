@@ -45,6 +45,6 @@ export default class ParticipanteModel {
 
         if (!data) return null;
 
-        return new participantesModel(data);
+        return new ParticipanteModel(data);
     }
 }
