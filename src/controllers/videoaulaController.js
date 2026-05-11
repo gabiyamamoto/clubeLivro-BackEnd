@@ -1,4 +1,4 @@
-import VideoaulaModel from '../models/VideoAulaModel.js';
+import VideoaulaModel from '../models/videoaulaModel.js';
 
 export const criar = async (req, res) => {
     try {
