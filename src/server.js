@@ -7,6 +7,7 @@ import personagemRoute from './routes/personagemRoute.js';
 import questaoRoute from './routes/questaoRoute.js';
 import videoAulaRoute from './routes/videoaulaRoute.js';
 import autenticar from './utils/apiKey.js';
+import temaRoute from './routes/temaRoute.js'
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -24,6 +25,7 @@ app.use('/api/persnagens', autenticar, personagemRoute);
 app.use('/api/participantes', autenticar, participanteRoute);
 app.use('/api/livros', autenticar, livroRoute);
 app.use('/api/dicas', autenticar, dicaRoute);
+app.use('/api/tema', autenticar, temaRoute);
 
 app.use((req, res) => {
     res.status(404).json({ error: 'Rota não encontrada' });
