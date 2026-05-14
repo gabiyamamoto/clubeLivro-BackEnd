@@ -33,7 +33,7 @@ export const criar = async (req, res) => {
         } = req.body;
 
         if (!titulo) {
-            return res.status(400).json({ error: 'O campo "nome" é obrigatório!' });
+            return res.status(400).json({ error: 'O campo "titulo" é obrigatório!' });
         }
         if (!capa) {
             return res.status(400).json({ error: 'O campo "capa" é obrigatório!' });
