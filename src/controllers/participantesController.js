@@ -40,12 +40,14 @@ export const atualizar = async (req, res) => {
     try {
         const idNum = Number(req.params.id);
 
-        if (isNaN(id)) {
+        if (isNaN(idNum)) {
             return res.status(400).json({ error: 'ID inválido.' });
         }
 
-        if (!req.body) {
-            return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
+        if (!req.body || Object.keys(req.body).length === 0) {
+            return res.status(400).json({
+                error: 'Corpo da requisição vazio. Envie os dados!',
+            });
         }
 
         const participante = await ParticipanteModel.buscarPorId(idNum);
@@ -55,15 +57,24 @@ export const atualizar = async (req, res) => {
         }
 
         const dadosParaAtualizar = {};
+
         if (req.body.nome !== undefined) dadosParaAtualizar.nome = req.body.nome;
+
         if (req.body.curso !== undefined) dadosParaAtualizar.curso = req.body.curso;
+
         if (req.body.fotoUrl !== undefined) dadosParaAtualizar.fotoUrl = req.body.fotoUrl;
 
         const data = await ParticipanteModel.atualizar(idNum, dadosParaAtualizar);
 
-        res.json({ message: `Participante "${data.nome}" atualizado com sucesso!`, data });
+        res.json({
+            message: `Participante "${data.nome}" atualizado com sucesso!`,
+            data,
+        });
     } catch (error) {
         console.error('Erro ao atualizar:', error);
-        res.status(500).json({ error: 'Erro interno ao atualizar o participante.' });
+
+        res.status(500).json({
+            error: 'Erro interno ao atualizar o participante.',
+        });
     }
 };
