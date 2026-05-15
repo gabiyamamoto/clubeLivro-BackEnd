@@ -1,5 +1,6 @@
 import express from 'express';
 import 'dotenv/config';
+import cors from 'cors';
 import dicaRoute from './routes/dicaRoute.js';
 import livroRoute from './routes/livroRoute.js';
 import participanteRoute from './routes/participanteRoute.js';
