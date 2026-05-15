@@ -1,8 +1,8 @@
 import prisma from '../lib/services/prismaClient.js';
 
 export default class TemaModel {
-    constructor({ id_tema = null, tema, tema_en } = {}) {
-        this.id_tema = id_tema;
+    constructor({ id = null, tema, tema_en } = {}) {
+        this.id = id;
         this.tema = tema;
         this.tema_en = tema_en;
     }
@@ -32,7 +32,7 @@ export default class TemaModel {
         }
 
         return prisma.tema.update({
-            where: { id_tema: this.id_tema },
+            where: { id: this.id },
             data: {
                 tema: this.tema,
                 tema_en: this.tema_en || null,
@@ -42,7 +42,7 @@ export default class TemaModel {
 
     async deletar() {
         return prisma.tema.delete({
-            where: { id_tema: this.id_tema },
+            where: { id: this.id },
         });
     }
 
@@ -61,7 +61,7 @@ export default class TemaModel {
 
     static async buscarPorId(id_tema) {
         const data = await prisma.tema.findUnique({
-            where: { id_tema },
+            where: { id: id_tema },
         });
 
         if (!data) {
