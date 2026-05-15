@@ -8,9 +8,9 @@ export const criar = async (req, res) => {
             });
         }
 
-        const { tema } = req.body;
+        const { tema, tema_en } = req.body;
 
-        const novoTema = new TemaModel({ tema });
+        const novoTema = new TemaModel({ tema, tema_en });
 
         const data = await novoTema.criar();
 
@@ -67,7 +67,6 @@ export const buscarPorId = async (req, res) => {
         });
     } catch (error) {
         console.error('Erro ao buscar tema:', error);
-
         return res.status(500).json({
             error: 'Erro ao buscar tema.',
         });
@@ -94,6 +93,10 @@ export const atualizar = async (req, res) => {
 
         if (req.body.tema !== undefined) {
             temaExistente.tema = req.body.tema;
+        }
+
+        if (req.body.tema_en !== undefined) {
+            temaExistente.tema_en = req.body.tema_en;
         }
 
         const data = await temaExistente.atualizar();
