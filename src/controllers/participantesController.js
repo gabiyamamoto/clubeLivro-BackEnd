@@ -40,12 +40,12 @@ export const atualizar = async (req, res) => {
     try {
         const idNum = Number(req.params.id);
 
-        if (!Number.isInteger(idNum)) {
+        if (isNaN(id)) {
             return res.status(400).json({ error: 'ID inválido.' });
         }
 
-        if (Object.keys(req.body).length === 0) {
-            return res.status(400).json({ error: 'Corpo da requisição vazio.' });
+        if (!req.body) {
+            return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
         }
 
         const participante = await ParticipanteModel.buscarPorId(idNum);
