@@ -1,9 +1,10 @@
 import prisma from '../lib/services/prismaClient.js';
 
 export default class TemaModel {
-    constructor({ id_tema = null, tema } = {}) {
+    constructor({ id_tema = null, tema, tema_en } = {}) {
         this.id_tema = id_tema;
         this.tema = tema;
+        this.tema_en = tema_en;
     }
 
     async criar() {
@@ -20,6 +21,7 @@ export default class TemaModel {
         return prisma.tema.create({
             data: {
                 tema: this.tema,
+                tema_en: this.tema_en || null,
             },
         });
     }
@@ -33,6 +35,7 @@ export default class TemaModel {
             where: { id_tema: this.id_tema },
             data: {
                 tema: this.tema,
+                tema_en: this.tema_en || null,
             },
         });
     }
