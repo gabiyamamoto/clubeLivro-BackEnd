@@ -168,9 +168,6 @@ async function main() {
                 opcaoD: 'Foco científico',
                 opcaoD_en: 'Scientific focus',
 
-                opcaoE: 'Neutralidade',
-                opcaoE_en: 'Neutrality',
-
                 respostaCorreta: 'B',
 
                 explicacao: 'O romantismo valoriza emoções e sentimentalismo.',
@@ -191,9 +188,6 @@ async function main() {
 
                 opcaoD: 'Aurora',
                 opcaoD_en: 'Aurora',
-
-                opcaoE: 'Helena',
-                opcaoE_en: 'Helena',
 
                 respostaCorreta: 'C',
 
