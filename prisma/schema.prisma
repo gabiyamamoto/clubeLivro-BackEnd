@@ -94,8 +94,6 @@ model Questao {
     opcaoC_en       String
     opcaoD          String
     opcaoD_en       String
-    opcaoE          String
-    opcaoE_en       String
     respostaCorreta String
     explicacao      String
     explicacao_en   String
