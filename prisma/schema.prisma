@@ -7,16 +7,17 @@ datasource db {
 }
 
 model Participante {
-    id      Int    @id @default(autoincrement())
-    nome    String
-    curso   String
-    fotoUrl String
+    id       Int    @id @default(autoincrement())
+    nome     String
+    curso    String
+    curso_en String?
+    fotoUrl  String
 
     @@map("participante")
 }
 
 model Livro {
-    id                           Int    @id @default(autoincrement())
+    id                           Int      @id @default(autoincrement())
     titulo                       String
     capa                         String
     autor                        String
@@ -37,7 +38,10 @@ model Livro {
     verossimilhanca_en           String
     caracteristicasLiterarias    String
     caracteristicasLiterarias_en String
-    personagens                  String
+
+    personagens                  String[]
+    nota                        Int?
+
     conclusao                    String
     conclusao_en                 String
 
@@ -86,6 +90,7 @@ model Questao {
     id              Int    @id @default(autoincrement())
     pergunta        String
     pergunta_en     String
+
     opcaoA          String
     opcaoA_en       String
     opcaoB          String
@@ -94,6 +99,7 @@ model Questao {
     opcaoC_en       String
     opcaoD          String
     opcaoD_en       String
+
     respostaCorreta String
     explicacao      String
     explicacao_en   String
