@@ -13,8 +13,6 @@ export default class QuestaoModel {
         opcaoC_en,
         opcaoD,
         opcaoD_en,
-        opcaoE,
-        opcaoE_en,
         respostaCorreta,
         explicacao,
         explicacao_en,
@@ -30,8 +28,6 @@ export default class QuestaoModel {
         this.opcaoC_en = opcaoC_en;
         this.opcaoD = opcaoD;
         this.opcaoD_en = opcaoD_en;
-        this.opcaoE = opcaoE;
-        this.opcaoE_en = opcaoE_en;
         this.respostaCorreta = respostaCorreta;
         this.explicacao = explicacao;
         this.explicacao_en = explicacao_en;
@@ -50,8 +46,6 @@ export default class QuestaoModel {
                 opcaoC_en: this.opcaoC_en,
                 opcaoD: this.opcaoD,
                 opcaoD_en: this.opcaoD_en,
-                opcaoE: this.opcaoE,
-                opcaoE_en: this.opcaoE_en,
                 respostaCorreta: this.respostaCorreta,
                 explicacao: this.explicacao,
                 explicacao_en: this.explicacao_en,
@@ -73,8 +67,6 @@ export default class QuestaoModel {
                 opcaoC_en: this.opcaoC_en,
                 opcaoD: this.opcaoD,
                 opcaoD_en: this.opcaoD_en,
-                opcaoE: this.opcaoE,
-                opcaoE_en: this.opcaoE_en,
                 respostaCorreta: this.respostaCorreta,
                 explicacao: this.explicacao,
                 explicacao_en: this.explicacao_en,
@@ -93,18 +85,12 @@ export default class QuestaoModel {
             where.pergunta = { contains: filtros.pergunta, mode: 'insensitive' };
         }
 
-        return prisma.questao.findMany({
-            where,
-        });
+        return prisma.questao.findMany({ where });
     }
 
     static async buscarPorId(id) {
-        const data = await prisma.questao.findUnique({
-            where: { id },
-        });
-        if (!data) {
-            return null;
-        }
+        const data = await prisma.questao.findUnique({ where: { id } });
+        if (!data) return null;
         return new QuestaoModel(data);
     }
 }

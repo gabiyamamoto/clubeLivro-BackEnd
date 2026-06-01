@@ -10,7 +10,7 @@ model Participante {
     id       Int    @id @default(autoincrement())
     nome     String
     curso    String
-    curso_en String?
+    curso_en String
     fotoUrl  String
 
     @@map("participante")

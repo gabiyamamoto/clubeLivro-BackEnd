@@ -1,10 +1,17 @@
 import prisma from '../lib/services/prismaClient.js';
 
 export default class ParticipanteModel {
-    constructor({ id = null, nome, curso, fotoUrl } = {}) {
+    constructor({
+        id = null,
+        nome,
+        curso,
+        curso_en,
+        fotoUrl,
+    } = {}) {
         this.id = id;
         this.nome = nome;
         this.curso = curso;
+        this.curso_en = curso_en;
         this.fotoUrl = fotoUrl;
     }
 
@@ -14,6 +21,7 @@ export default class ParticipanteModel {
             data: {
                 nome: this.nome,
                 curso: this.curso,
+                curso_en: this.curso_en,
                 fotoUrl: this.fotoUrl,
             },
         });
@@ -29,8 +37,19 @@ export default class ParticipanteModel {
     static async buscarTodos(filtros = {}) {
         const where = {};
 
-        if (filtros.nome) where.nome = { contains: filtros.nome, mode: 'insensitive' };
-        if (filtros.curso) where.curso = { contains: filtros.curso, mode: 'insensitive' };
+        if (filtros.nome) {
+            where.nome = {
+                contains: filtros.nome,
+                mode: 'insensitive',
+            };
+        }
+
+        if (filtros.curso) {
+            where.curso = {
+                contains: filtros.curso,
+                mode: 'insensitive',
+            };
+        }
 
         return prisma.participante.findMany({
             where,

@@ -58,11 +58,21 @@ export const atualizar = async (req, res) => {
 
         const dadosParaAtualizar = {};
 
-        if (req.body.nome !== undefined) dadosParaAtualizar.nome = req.body.nome;
+        if (req.body.nome !== undefined) {
+            dadosParaAtualizar.nome = req.body.nome;
+        }
 
-        if (req.body.curso !== undefined) dadosParaAtualizar.curso = req.body.curso;
+        if (req.body.curso !== undefined) {
+            dadosParaAtualizar.curso = req.body.curso;
+        }
 
-        if (req.body.fotoUrl !== undefined) dadosParaAtualizar.fotoUrl = req.body.fotoUrl;
+        if (req.body.curso_en !== undefined) {
+            dadosParaAtualizar.curso_en = req.body.curso_en;
+        }
+
+        if (req.body.fotoUrl !== undefined) {
+            dadosParaAtualizar.fotoUrl = req.body.fotoUrl;
+        }
 
         const data = await ParticipanteModel.atualizar(idNum, dadosParaAtualizar);
 

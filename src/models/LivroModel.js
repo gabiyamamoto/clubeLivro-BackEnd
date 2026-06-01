@@ -26,42 +26,33 @@ export default class LivroModel {
         caracteristicasLiterarias_en,
         conclusao,
         conclusao_en,
+        nota = null,
     } = {}) {
         this.id = id;
-
         this.titulo = titulo;
         this.capa = capa;
         this.autor = autor;
         this.anoPublicacao = anoPublicacao;
-
         this.genero = genero;
         this.genero_en = genero_en;
-
         this.resumo = resumo;
         this.resumo_en = resumo_en;
-
         this.contexto = contexto;
         this.contexto_en = contexto_en;
-
         this.enredo = enredo;
         this.enredo_en = enredo_en;
-
         this.detalhesAutor = detalhesAutor;
         this.detalhesAutor_en = detalhesAutor_en;
-
         this.estiloEscrita = estiloEscrita;
         this.estiloEscrita_en = estiloEscrita_en;
-
         this.verossimilhanca = verossimilhanca;
         this.verossimilhanca_en = verossimilhanca_en;
-
         this.personagens = personagens;
-
         this.caracteristicasLiterarias = caracteristicasLiterarias;
         this.caracteristicasLiterarias_en = caracteristicasLiterarias_en;
-
         this.conclusao = conclusao;
         this.conclusao_en = conclusao_en;
+        this.nota = nota;
     }
 
     async criar() {
@@ -85,11 +76,16 @@ export default class LivroModel {
                 estiloEscrita_en: this.estiloEscrita_en,
                 verossimilhanca: this.verossimilhanca,
                 verossimilhanca_en: this.verossimilhanca_en,
-                personagens: this.personagens,
+                personagens: Array.isArray(this.personagens)
+                    ? this.personagens
+                    : typeof this.personagens === 'string'
+                        ? this.personagens.split(',').map(p => p.trim())
+                        : [],
                 caracteristicasLiterarias: this.caracteristicasLiterarias,
                 caracteristicasLiterarias_en: this.caracteristicasLiterarias_en,
                 conclusao: this.conclusao,
                 conclusao_en: this.conclusao_en,
+                nota: this.nota ? Number(this.nota) : null,
             },
         });
     }
@@ -97,7 +93,6 @@ export default class LivroModel {
     async atualizar() {
         return prisma.livro.update({
             where: { id: this.id },
-
             data: {
                 titulo: this.titulo,
                 capa: this.capa,
@@ -117,11 +112,16 @@ export default class LivroModel {
                 estiloEscrita_en: this.estiloEscrita_en,
                 verossimilhanca: this.verossimilhanca,
                 verossimilhanca_en: this.verossimilhanca_en,
-                personagens: this.personagens,
+                personagens: Array.isArray(this.personagens)
+                    ? this.personagens
+                    : typeof this.personagens === 'string'
+                        ? this.personagens.split(',').map(p => p.trim())
+                        : [],
                 caracteristicasLiterarias: this.caracteristicasLiterarias,
                 caracteristicasLiterarias_en: this.caracteristicasLiterarias_en,
                 conclusao: this.conclusao,
                 conclusao_en: this.conclusao_en,
+                nota: this.nota ? Number(this.nota) : null,
             },
         });
     }
@@ -135,10 +135,12 @@ export default class LivroModel {
     }
 
     static async buscarPorId(id) {
-        const data = await prisma.livro.findUnique({ where: { id } });
-        if (!data) {
-            return null;
-        }
+        const data = await prisma.livro.findUnique({
+            where: { id },
+        });
+
+        if (!data) return null;
+
         return new LivroModel(data);
     }
 }
