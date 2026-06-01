@@ -78,14 +78,16 @@ export default class LivroModel {
                 verossimilhanca_en: this.verossimilhanca_en,
                 personagens: Array.isArray(this.personagens)
                     ? this.personagens
-                    : typeof this.personagens === 'string'
-                        ? this.personagens.split(',').map(p => p.trim())
+                    : typeof this.personagens === 'string' && this.personagens.trim()
+                        ? this.personagens.split(',').map(p => p.trim()).filter(Boolean)
                         : [],
                 caracteristicasLiterarias: this.caracteristicasLiterarias,
                 caracteristicasLiterarias_en: this.caracteristicasLiterarias_en,
                 conclusao: this.conclusao,
                 conclusao_en: this.conclusao_en,
-                nota: this.nota ? Number(this.nota) : null,
+                nota: this.nota !== undefined && this.nota !== null
+                    ? Math.min(5, Math.max(1, Number(this.nota)))
+                    : null
             },
         });
     }
@@ -114,14 +116,16 @@ export default class LivroModel {
                 verossimilhanca_en: this.verossimilhanca_en,
                 personagens: Array.isArray(this.personagens)
                     ? this.personagens
-                    : typeof this.personagens === 'string'
-                        ? this.personagens.split(',').map(p => p.trim())
+                    : typeof this.personagens === 'string' && this.personagens.trim()
+                        ? this.personagens.split(',').map(p => p.trim()).filter(Boolean)
                         : [],
                 caracteristicasLiterarias: this.caracteristicasLiterarias,
                 caracteristicasLiterarias_en: this.caracteristicasLiterarias_en,
                 conclusao: this.conclusao,
                 conclusao_en: this.conclusao_en,
-                nota: this.nota ? Number(this.nota) : null,
+                nota: this.nota !== undefined && this.nota !== null
+                    ? Math.min(5, Math.max(1, Number(this.nota)))
+                    : null
             },
         });
     }
@@ -131,7 +135,9 @@ export default class LivroModel {
     }
 
     static async buscarTodos() {
-        return prisma.livro.findMany();
+        return prisma.livro.findMany({
+            orderBy: { id: 'asc' }
+        });
     }
 
     static async buscarPorId(id) {

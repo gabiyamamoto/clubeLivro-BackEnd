@@ -1,4 +1,5 @@
 import LivroModel from '../models/LivroModel.js';
+import prisma from '../lib/services/prismaClient.js';
 
 export const criar = async (req, res) => {
     try {
@@ -110,7 +111,9 @@ export const atualizar = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const livroExistente = await LivroModel.buscarPorId(Number(id));
+        const livroExistente = await prisma.livro.findUnique({
+            where: { id: Number(id) }
+        });
 
         if (!livroExistente) {
             return res.status(404).json({ error: 'Livro não encontrado.' });
@@ -120,6 +123,8 @@ export const atualizar = async (req, res) => {
             ...livroExistente,
             ...req.body,
             id: Number(id),
+            nota: req.body.nota ?? livroExistente.nota,
+            personagens: req.body.personagens ?? livroExistente.personagens,
         });
 
         const data = await livroAtualizado.atualizar();
