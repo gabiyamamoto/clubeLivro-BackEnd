@@ -3,6 +3,11 @@ import 'dotenv/config';
 import pkg from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 
+if (process.env.NODE_ENV === 'production' && process.env.ALLOW_SEED !== 'true') {
+    console.log('🚫 Seed bloqueado em produção');
+    process.exit(1);
+}
+
 const { PrismaClient } = pkg;
 
 const pool = new pg.Pool({
@@ -14,16 +19,6 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-    console.log('🌱 Resetando banco...');
-
-    await prisma.questao.deleteMany();
-    await prisma.tema.deleteMany();
-    await prisma.dica.deleteMany();
-    await prisma.videoaula.deleteMany();
-    await prisma.personagem.deleteMany();
-    await prisma.livro.deleteMany();
-    await prisma.participante.deleteMany();
-
     console.log('📦 Inserindo dados...');
 
     // 👥 PARTICIPANTES
