@@ -6,10 +6,9 @@ import {
 
 const router = express.Router();
 
-router.get("/integracoes", buscarTodosIntegrados);
-
+router.get("/", buscarTodosIntegrados);
 router.get(
-    "/integracoes/:origem/:id",
+    "/:origem/:id",
     buscarLivroPorId
 );
 
