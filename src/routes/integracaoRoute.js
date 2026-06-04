@@ -1,7 +1,7 @@
 import express from 'express';
 import {
     buscarTodosIntegrados,
-    buscarLivroIntegradoPorId
+    buscarLivroPorId
 } from '../controllers/integracaoController.js';
 
 const router = express.Router();
