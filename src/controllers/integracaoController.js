@@ -72,12 +72,14 @@ function normalizarLivro(livro, origem) {
 
         titulo:
             livro.titulo ||
+            livro.tituloDoLivro ||
             livro.nome ||
             livro.title ||
             "",
 
         titulo_en:
             livro.titulo_en ||
+            livro.tituloDoLivroEn ||
             livro.nomeIng ||
             livro.title_en ||
             "",
@@ -85,17 +87,20 @@ function normalizarLivro(livro, origem) {
         autor:
             livro.autor ||
             livro.author ||
+            livro.autores?.[0]?.nome ||
             "",
 
         capa:
             livro.capa ||
             livro.foto ||
+            livro.capaURL ||
             livro.capa_url ||
             livro.image ||
             "",
 
         anoPublicacao:
             livro.anoPublicacao ||
+            livro.anoDeLancamento ||
             livro.ano ||
             livro.publicacao ||
             "",
@@ -111,57 +116,90 @@ function normalizarLivro(livro, origem) {
 
         resumo:
             livro.resumo ||
+            livro.descricao ||
             livro.descricao_pt ||
             "",
 
         resumo_en:
             livro.resumo_en ||
+            livro.resumoEn ||
+            livro.descricaoEn ||
             livro.descricao_en ||
             livro.resumoIng ||
             "",
 
         contexto:
             livro.contexto ||
+            livro.contextoHistorico ||
             livro.contextoHist ||
             livro.contexto_historico_pt ||
             "",
 
         contexto_en:
             livro.contexto_en ||
+            livro.contextoHistoricoEn ||
             livro.contextoHistIng ||
             livro.contexto_historico_en ||
             "",
 
         detalhesAutor:
             livro.detalhesAutor ||
+            livro.autores?.[0]?.biografia ||
             livro.detalhes_autor_pt ||
             "",
 
         detalhesAutor_en:
             livro.detalhesAutor_en ||
+            livro.autores?.[0]?.biografiaEn ||
             livro.detalhes_autor_en ||
             "",
 
         estiloEscrita:
             livro.estiloEscrita ||
+            livro.movimentoLiterario?.[0]?.faseTexto ||
             livro.estilo_escrita_pt ||
             "",
 
         estiloEscrita_en:
             livro.estiloEscrita_en ||
+            livro.movimentoLiterario?.[0]?.faseTexto ||
             livro.estilo_escrita_en ||
             "",
 
         enredo:
             livro.enredo ||
             livro.enredo_pt ||
-            "",
+            (
+                livro.enredos?.[0]
+                    ? `
+${livro.enredos[0].introducao}
+
+${livro.enredos[0].conflito}
+
+${livro.enredos[0].climax}
+
+${livro.enredos[0].desfecho}
+`
+                    : ""
+            ),
 
         enredo_en:
             livro.enredo_en ||
             livro.enredo ||
             livro.enredo_pt ||
-            "",
+            (
+                livro.enredos?.[0]
+                    ? `
+${livro.enredos[0].introducaoEn}
+
+${livro.enredos[0].conflitoEn}
+
+${livro.enredos[0].climaxEn}
+
+${livro.enredos[0].desfechoEn}
+`
+                    : ""
+            ),
 
         verossimilhanca:
             livro.verossimilhanca ||
@@ -175,15 +213,21 @@ function normalizarLivro(livro, origem) {
             "",
 
         personagens:
-            livro.personagens || [],
+            Array.isArray(livro.personagens)
+                ? livro.personagens.map((p) =>
+                    typeof p === "object" ? p.nome : p
+                )
+                : livro.personagens || [],
 
         caracteristicasLiterarias:
             livro.caracteristicasLiterarias ||
+            livro.movimentoLiterario?.[0]?.caracteristicas ||
             livro.caracteristicas_literarias_pt ||
             "",
 
         caracteristicasLiterarias_en:
             livro.caracteristicasLiterarias_en ||
+            livro.movimentoLiterario?.[0]?.caracteristicasEn ||
             livro.caracteristicas_literarias_en ||
             "",
 
@@ -230,6 +274,14 @@ export const buscarTodosIntegrados = async (req, res) => {
                     normalizarLivro(livro, api.origem)
                 );
             })
+        );
+
+        console.log(
+            respostas.map((r, index) => ({
+                api: APIS[index].nome,
+                status: r.status,
+                erro: r.reason?.message
+            }))
         );
 
         const livros = respostas
