@@ -64,6 +64,26 @@ const APIS = [
     }
 ];
 
+async function buscarAutorClubyx(autorId, apiKey) {
+
+    const resposta = await fetch(
+        `https://projeto-clubyx.onrender.com/autor/${autorId}`,
+        {
+            headers: {
+                "x-api-key": apiKey
+            }
+        }
+    );
+
+    if (!resposta.ok) {
+        return null;
+    }
+
+    const dados = await resposta.json();
+
+    return dados.data;
+}
+
 function normalizarLivro(livro, origem) {
     return {
         id: livro.id || livro._id,
@@ -270,9 +290,42 @@ export const buscarTodosIntegrados = async (req, res) => {
                     ? dados
                     : dados.data || [];
 
-                return livrosArray.map((livro) =>
-                    normalizarLivro(livro, api.origem)
+                const livrosNormalizados = await Promise.all(
+
+                    livrosArray.map(async (livro) => {
+
+                        if (
+                            api.origem === "clubyx" &&
+                            livro.autorId
+                        ) {
+
+                            const autor = await buscarAutorClubyx(
+                                livro.autorId,
+                                api.apiKey
+                            );
+
+                            return normalizarLivro(
+                                {
+                                    ...livro,
+
+                                    autor: autor?.nome,
+
+                                    detalhesAutor:
+                                        autor?.biografiaAutor,
+
+                                },
+                                api.origem
+                            );
+                        }
+
+                        return normalizarLivro(
+                            livro,
+                            api.origem
+                        );
+                    })
                 );
+
+                return livrosNormalizados;
             })
         );
 
@@ -341,8 +394,34 @@ export const buscarLivroPorId = async (req, res) => {
             });
         }
 
+        let livroCompleto = livro;
+
+        if (
+            origem === "clubyx" &&
+            livro.autorId
+        ) {
+
+            const autor = await buscarAutorClubyx(
+                livro.autorId,
+                api.apiKey
+            );
+
+            livroCompleto = {
+                ...livro,
+
+                autor: autor?.nome,
+
+                detalhesAutor:
+                    autor?.biografiaAutor,
+                    
+            };
+        }
+
         return res.status(200).json(
-            normalizarLivro(livro, origem)
+            normalizarLivro(
+                livroCompleto,
+                origem
+            )
         );
 
     } catch (erro) {
